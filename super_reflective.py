@@ -77,6 +77,7 @@ class RelativePermutation:
 
 class Group:
     def __init__(self, content, group_type):
+        # TODO handle non-printable groups (those starting with '!'
         self.group_type = group_type
         self.data, remaining_content = Group.split_data_from(content)
         self.operator, remaining_content = Group.split_operator_from(remaining_content)
