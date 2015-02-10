@@ -2,25 +2,6 @@ import re
 
 
 # TODO organize these classes better
-class GroupType:
-    """A class for holding the regexes that start and end a group
-    In super-reflective there are two top-level types of groups:
-        - Regular groups, marked by [], which can be permuted, and
-        - Fillable groups, marked by <>, for which a permutation only acts on the data attached to the group, but
-          in the process turns the fillable group into a regular one.
-    Note that neither of these types are recursive, so groups cannot contain groups.
-    Here the word 'group' is used in the looser informal sense, not in the algebraic sense.
-    """
-
-    def __init__(self, opening, closing, name):
-        self.opening = opening
-        self.closing = closing
-        self.name = name
-
-GROUP_TYPES = [
-    GroupType(r'\[', r'\]', 'regular'),
-    GroupType('<', '>', 'fillable')
-]
 
 
 class RelativePermutation:
@@ -76,20 +57,18 @@ class RelativePermutation:
 
 
 class Group:
-    def __init__(self, content, group_type):
-        # TODO handle non-printable groups (those starting with '!'
-        self.group_type = group_type
+    def __init__(self, content):
+        # TODO handle non-printable groups (those starting with '!')
+        # TODO handle fillable groups (starting with '@')
         self.data, remaining_content = Group.split_data_from(content)
         self.operator, remaining_content = Group.split_operator_from(remaining_content)
         self.permutation = RelativePermutation(remaining_content)
 
     def __str__(self):
         return (
-            self.group_type.opening
-            + self.data
+            self.data
             + self.operator
             + self.permutation.cycle_notation
-            + self.group_type.closing
         )
 
     @staticmethod
@@ -118,14 +97,5 @@ class Group:
 
 
 def run_sr(sr_code):
-    group_pattern = (
-        '(?:{0}'  # A group should begin with the opening brace ({0}),
-        '(?P<{2}>[^{0}{1}]*)'  # then contain a bunch of non-brace characters,
-        '{1})'  # and end with a closing brace (({1}))
-    )
-    group_matchers = [group_pattern.format(group_type.opening, group_type.closing, group_type.name)
-                      for group_type in GROUP_TYPES]
-    general_matcher = re.compile('|'.join(group_matchers))
-    # TODO use these matches to create groups.
-    # TODO add actual execution.
-    return general_matcher.findall(sr_code)
+    groups = map(Group, sr_code.split(' '))
+    return groups
