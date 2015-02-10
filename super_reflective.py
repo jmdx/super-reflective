@@ -60,15 +60,28 @@ class Group:
     def __init__(self, content):
         # TODO handle non-printable groups (those starting with '!')
         # TODO handle fillable groups (starting with '@')
-        self.data, remaining_content = Group.split_data_from(content)
+        # TODO add bitwise shifts
+        self.is_fillable, remaining_content = Group.extract_char(content, '@')
+        should_block_print, remaining_content = Group.extract_char(remaining_content, '!')
+        self.is_printable = not should_block_print
+        self.data, remaining_content = Group.split_data_from(remaining_content)
         self.operator, remaining_content = Group.split_operator_from(remaining_content)
         self.permutation = RelativePermutation(remaining_content)
 
+    def replace_from(self, other_group):
+        self.data = other_group.data
+        if not self.is_fillable:
+            self.is_printable = other_group.is_printable
+            self.operator = other_group.operator
+            self.permutation = other_group.permutation
+        else:
+            self.is_fillable = True
+
     def __str__(self):
         return (
-            self.data
-            + self.operator
-            + self.permutation.cycle_notation
+            str(self.data or '')
+            + str(self.operator or '')
+            + str(self.permutation.cycle_notation or '')
         )
 
     @staticmethod
@@ -94,6 +107,17 @@ class Group:
         if content[0] in operator_chars:
             return content[0], content[1:]
         return None, content
+
+    @staticmethod
+    def extract_char(content, char_to_look_for):
+        """
+        Returns a boolean representing whether or not char_to_look_for is in content, as well as the content with that
+        character removed.
+        """
+        if char_to_look_for in content:
+            return True, content.replace(char_to_look_for, '')
+        else:
+            return False, content
 
 
 def run_sr(sr_code):
