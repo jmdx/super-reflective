@@ -14,7 +14,7 @@ A group can have:
   - '-' - subtract the data on the left from the data on the right, maybe stopping at zero
   - '/', '*', '^'(xor), '|'
   - '!' - don't print this group
-  - '@' - dataless 'groups' - get filled in a permutation step and turn into groups (when read they give out 0, so @... @...  (-1-2) evaluates to  0 0 (-1-2))
+  - '@' - stubborn 'groups' - get filled in a permutation step and turn into groups (when read they give out 0, so @... @... (-1-2) evaluates to  0 0 (-1-2))
 
 Interpreting a program then consists of:
   - Read a bunch of groups from stdin

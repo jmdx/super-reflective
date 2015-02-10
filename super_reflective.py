@@ -58,10 +58,8 @@ class RelativePermutation:
 
 class Group:
     def __init__(self, content):
-        # TODO handle non-printable groups (those starting with '!')
-        # TODO handle fillable groups (starting with '@')
         # TODO add bitwise shifts
-        self.is_fillable, remaining_content = Group.extract_char(content, '@')
+        self.is_stubborn, remaining_content = Group.extract_char(content, '@')
         should_block_print, remaining_content = Group.extract_char(remaining_content, '!')
         self.is_printable = not should_block_print
         self.data, remaining_content = Group.split_data_from(remaining_content)
@@ -70,12 +68,12 @@ class Group:
 
     def replace_from(self, other_group):
         self.data = other_group.data
-        if not self.is_fillable:
+        if not self.is_stubborn:
             self.is_printable = other_group.is_printable
             self.operator = other_group.operator
             self.permutation = other_group.permutation
         else:
-            self.is_fillable = True
+            self.is_stubborn = True
 
     def __str__(self):
         return (
