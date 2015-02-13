@@ -34,35 +34,35 @@ Interpreting a program then consists of:
             ^
 // Nothing to print
 // Presumably no input
-// Now record the eligible permutations: (-3+5) around the 7th element, and (-8+0) around the 12th
+// Now record eligible permutations: (-3+5) around the 7th element, and (-8+0) around the 12th
 0 5 + !1(-8+0) 1 - 4(-3+5) 0 & 0(-9-3) ^ 5 // permute the 4(-3+5) around the 7th element
       ^                                  ^
 0 5 + 5 1 - 4(-3+5) 0 & 0(-9-3) ^ !1(-8+0) // permute the !1(-8+0) around the 12th element
       ^                           ^
 0 5 + 10 1 - 3(-3+5) 0 & 0(-9-3) ^ !1(-8+0) // operate
       ^      ^
-// Now record the eligible permutations: (-3+5) around the 7th element, and (-8+0) around the 12th
+// Now record eligible permutations: (-3+5) around the 7th element, and (-8+0) around the 12th
 0 5 + !1(-8+0) 1 - 3(-3+5) 0 & 0(-9-3) ^ 10 // permute the 4(-3+5) around the 7th element
       ^                                  ^
 0 5 + 10 1 - 3(-3+5) 0 & 0(-9-3) ^ !1(-8+0) // permute the !1(-8+0) around the 12th element
       ^                            ^
 0 5 + 15 1 - 2(-3+5) 0 & 0(-9-3) ^ !1(-8+0) // operate
       ^      ^
-// Now record the eligible permutations: (-3+5) around the 7th element, and (-8+0) around the 12th
+// Now record eligible permutations: (-3+5) around the 7th element, and (-8+0) around the 12th
 0 5 + !1(-8+0) 1 - 2(-3+5) 0 & 0(-9-3) ^ 15 // permute the 4(-3+5) around the 7th element
       ^                                  ^
 0 5 + 15 1 - 2(-3+5) 0 & 0(-9-3) ^ !1(-8+0) // permute the !1(-8+0) around the 12th element
       ^                            ^
 0 5 + 20 1 - 1(-3+5) 0 & 0(-9-3) ^ !1(-8+0) // operate
       ^      ^
-// Now record the eligible permutations: (-3+5) around the 7th element, and (-8+0) around the 12th
+// Now record eligible permutations: (-3+5) around the 7th element, and (-8+0) around the 12th
 0 5 + !1(-8+0) 1 - 1(-3+5) 0 & 0(-9-3) ^ 20 // permute the 4(-3+5) around the 7th element
       ^                                  ^
 0 5 + 20 1 - 1(-3+5) 0 & 0(-9-3) ^ !1(-8+0) // permute the !1(-8+0) around the 12th element
       ^                            ^
 0 5 + 25 1 - 0(-3+5) 0 & 0(-9-3) ^ !1(-8+0) // operate
       ^      ^
-// Now record the eligible permutations: this time just (-8+0) around the 12th
+// Now record eligible permutations: this time just (-8+0) around the 12th
 0 5 + !1(-8+0) 1 - 0(-3+5) 0 & 0(-9-3) ^ 25 // permute the !1(-8+0) around the 12th element
       ^                                  ^
 0 5 + !6(-8+0) 1 - 0(-3+5) 0 & 0(-9-3) ^ 25 // operate
