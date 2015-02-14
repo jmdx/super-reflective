@@ -77,7 +77,9 @@ class Group:
 
     def __str__(self):
         return (
-            str(self.data or '')
+            str(self.data)
+            + ('@' if self.is_stubborn else '')
+            + ('!' if not self.is_printable else '')
             + str(self.operator or '')
             + str(self.permutation.cycle_notation or '')
         )
@@ -85,7 +87,12 @@ class Group:
     @staticmethod
     def split_data_from(content):
         sign = 1
+        if len(content) < 1:
+            return 1, content
         if content[0] in '+-':
+            if len(content) == 1:
+                # Then the '+' or '-' is actually a lone operator.
+                return 1, content
             content = content[1:]
             if content[0] == '-':
                 sign = -1
@@ -96,15 +103,15 @@ class Group:
         data_str = content[:first_nonint_index]
         remaining_content = content[first_nonint_index:]
         if len(data_str) == 0:
-            return 0, remaining_content
+            return 1, remaining_content
         return sign * int(content[:first_nonint_index]), remaining_content
 
     @staticmethod
     def split_operator_from(content):
         operator_chars = set('+-*/|&^')
-        if content[0] in operator_chars:
-            return content[0], content[1:]
-        return None, content
+        if len(content) == 0 or content[0] in operator_chars:
+            return None, content
+        return content[0], content[1:]
 
     @staticmethod
     def extract_char(content, char_to_look_for):
